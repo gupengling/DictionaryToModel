@@ -34,6 +34,7 @@ class ViewController: UIViewController {
                     ] as [String : AnyObject]
         let teacher:TeacherModel = TeacherModel.objectWithKeyValues(keyValues: dict) as! TeacherModel
         
+        
         print("age = \(teacher.age) "+"name = \(teacher.name) "+"sex = \(teacher.sex) "+"coding = \(teacher.coding) "+"classId = \(teacher.classModel.classId) "+"className = \(teacher.classModel.className)")
         
         let c:Int = teacher.schoolModel.count

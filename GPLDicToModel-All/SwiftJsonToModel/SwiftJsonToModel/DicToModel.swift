@@ -7,130 +7,13 @@
 //
 
 import Foundation
-enum TinyModelType : NSString {
-    case Base = "Base"
+enum ModelType : NSString {
+    case Normal = "Normal"
     case ModelArr = "ModelArr"
     case Model = "Model"
 }
-extension NSObject{
-    @objc func tmStatementKey() ->[String:String]{
-        return ["":""]
-    }
-    
-    @objc func tmReplacedKey() ->[String:String]{
-        return ["":""]
-    }
-    class func AllProperties(_ typeClass: AnyClass) -> [LKKProperty]? {
-        guard let className  = NSString(cString: class_getName(typeClass), encoding: String.Encoding.utf8.rawValue) else {
-            return nil
-        }
-        
-        if className.isEqual(to: "NSObject") {
-            return nil
-        }
 
-        let my = self.init()
-        let statementDict = my.tmStatementKey()
-        let replaceDic = my.tmReplacedKey()
 
-        var propertiesArray = [LKKProperty]()
-        let tmSuperClass =  typeClass.superclass() as! NSObject.Type
-        
-
-        let superM = AllProperties(tmSuperClass)
-        if let _ = superM {
-            propertiesArray += superM!
-        }
-
-        var count : UInt32 = 0
-        let ivars = class_copyIvarList(typeClass, &count)!
-        
-        for i in 0..<count {
-            let ivar = ivars[Int(i)]
-            propertiesArray.append(LKKProperty(ivar,statementDict, replaceDic))
-        }
-        free(ivars)
-        return propertiesArray
-    }
-    
-    class func objectWithKeyValues(keyValues:Dictionary<String, AnyObject>) -> AnyObject {
-        let model = self.init()
-        let properties = AllProperties(self)
-        model.setValuesForProperties(properties, keyValues: keyValues)
-        return model;
-    }
-    
-    class func tmSpeelBreakModelArr(_ array:Array<Any>) -> [AnyObject]{
-        return objectArrayWithKeyValuesArray(array , self)
-    }
-
-    private class func objectArrayWithKeyValuesArray(_ array:Array<Any> , _ currentClass:AnyClass) -> [AnyObject]{
-        var temp = Array<AnyObject>()
-        let properties = self.AllProperties(currentClass)
-        for item in array{
-            let keyValues = item as? NSDictionary
-            if (keyValues != nil){
-                let model = self.init()
-                //为每个model赋值
-                model.setValuesForProperties(properties, keyValues: keyValues! as! Dictionary<String, AnyObject>)
-                temp.append(model)
-            }
-        }
-        return temp
-    }
-    //赋值
-    func setValuesForProperties(_ properties:[LKKProperty]?,keyValues:Dictionary<String, AnyObject>){
-        guard (properties != nil) else {
-            return
-        }
-        var currentDict = keyValues
-//        print(currentDict)
-
-        for property in properties!{
-            
-            if property.tmModelType ==  .Model {
-                guard let value = currentDict[property.property] else {
-                    debugPrint("TinyModelDebug: " + property.propertyName + "检测出空值")
-                    return
-                }
-                let currentModel = property.typeClass as! NSObject.Type
-                self.setValue(currentModel.objectWithKeyValues(keyValues: value as! Dictionary<String, AnyObject>), forKey: property.propertyName)
-
-//                currentDict = value as! [String : AnyObject]//字典套字典使用，有个问题
-            }
-            else if (property.tmModelType ==  .ModelArr) {
-                if property.typeClass  == nil {
-                    debugPrint("TinyModelDebug: " + property.propertyName + " key与你创建的类不一致")
-                    return
-                }
-                let value = currentDict[property.property]
-                if value == nil {
-                    continue
-                }
-                let currentModel = property.typeClass as! NSObject.Type
-                let currentArr = currentModel.tmSpeelBreakModelArr(value as! Array )
-                self.setValue(currentArr, forKey: property.propertyName)
-            }
-            else {
-                guard let value = currentDict[property.property] else {
-                    debugPrint("TinyModelDebug: " + "\(property.propertyName)" + "模型与字典的key不匹配")
-                    return
-                }
-                let type = NSStringFromClass(object_getClass(value)!)
-                if type != "NSNull" {
-                    self.setValue(value, forKey: property.propertyName as String)
-                }else {
-                    debugPrint("TinyModelDebug: " + "\(property.propertyName)" + "值为nil")
-                }
-
-            }
-            
-        }
-    }
-    
-}
-    
-    
 //    class func objectWithKeyValues(keyValues:NSDictionary) -> AnyObject{
 //        let model = self.init()
 //
@@ -155,13 +38,13 @@ extension NSObject{
 //        }
 //        return model
 //    }
-//    
+//
 //    func toDictionary(from classType: NSObject.Type) -> [String: Any] {
-//        
+//
 //        var propertiesCount : CUnsignedInt = 0
 //        let propertiesInAClass = class_copyPropertyList(classType, &propertiesCount)
 //        let propertiesDictionary : NSMutableDictionary = NSMutableDictionary()
-//        
+//
 //        for i in 0 ..< Int(propertiesCount) {
 //            let property = propertiesInAClass?[i]
 //            let strKey = NSString(utf8String: property_getName(property!)) as String?
@@ -171,12 +54,143 @@ extension NSObject{
 //        }
 //        return propertiesDictionary as! [String : Any]
 //    }
-    
+
 //}
-class LKKProperty{
+
+
+extension NSObject{
+    @objc func tmStatementKey() ->[String:String]{
+        return ["":""]
+    }
+    
+    @objc func tmReplacedKey() ->[String:String]{
+        return ["":""]
+    }
+    
+    /// 字典转模型
+    ///
+    /// - Parameter keyValues: 原数据字典
+    /// - Returns: 转换后的模型
+    class func objectWithKeyValues(keyValues:Dictionary<String, AnyObject>) -> AnyObject {
+        let model = self.init()
+        let properties = AllProperties(self)
+        model.setValuesForProperties(properties, keyValues: keyValues)
+        return model;
+    }
+    
+    /// 数组转模型数组
+    ///
+    /// - Parameter array: 原数据数组
+    /// - Returns: 转换后的模型数组
+    class func objectArrayForModelArr(_ array:Array<Any>) -> [AnyObject]{
+        return objectArrayWithKeyValuesArray(array , self)
+    }
+    
+    private class func objectArrayWithKeyValuesArray(_ array:Array<Any> , _ currentClass:AnyClass) -> [AnyObject]{
+        var temp = Array<AnyObject>()
+        let properties = self.AllProperties(currentClass)
+        for item in array{
+            let keyValues = item as? NSDictionary
+            if (keyValues != nil){
+                let model = self.init()
+                //为每个model赋值
+                model.setValuesForProperties(properties, keyValues: keyValues! as! Dictionary<String, AnyObject>)
+                temp.append(model)
+            }
+        }
+        return temp
+    }
+    
+    //获取所有属性名
+    class func AllProperties(_ typeClass: AnyClass) -> [GPLProperty]? {
+        guard let className  = NSString(cString: class_getName(typeClass), encoding: String.Encoding.utf8.rawValue) else {
+            return nil
+        }
+        
+        if className.isEqual(to: "NSObject") {
+            return nil
+        }
+
+        let my = self.init()
+        let statementDict = my.tmStatementKey()
+        let replaceDic = my.tmReplacedKey()
+
+        var propertiesArray = [GPLProperty]()
+        let tmSuperClass =  typeClass.superclass() as! NSObject.Type
+        
+
+        let superM = AllProperties(tmSuperClass)
+        if let _ = superM {
+            propertiesArray += superM!
+        }
+
+        var count : UInt32 = 0
+        let ivars = class_copyIvarList(typeClass, &count)!
+        
+        for i in 0..<count {
+            let ivar = ivars[Int(i)]
+            propertiesArray.append(GPLProperty(ivar,statementDict, replaceDic))
+        }
+        free(ivars)
+        return propertiesArray
+    }
+    
+    //赋值
+    func setValuesForProperties(_ properties:[GPLProperty]?,keyValues:Dictionary<String, AnyObject>){
+        guard (properties != nil) else {
+            return
+        }
+        var currentDict = keyValues
+//        print(currentDict)
+
+        for property in properties!{
+            
+            if property.modelType ==  .Model {
+                guard let value = currentDict[property.property] else {
+                    debugPrint("Debug: " + property.propertyName + "检测出空值")
+                    return
+                }
+                let currentModel = property.typeClass as! NSObject.Type
+                self.setValue(currentModel.objectWithKeyValues(keyValues: value as! Dictionary<String, AnyObject>), forKey: property.propertyName)
+
+//                currentDict = value as! [String : AnyObject]//字典套字典使用，有个问题
+            }
+            else if (property.modelType ==  .ModelArr) {
+                if property.typeClass  == nil {
+                    debugPrint("Debug: " + property.propertyName + " key与你创建的类不一致")
+                    return
+                }
+                let value = currentDict[property.property]
+                if value == nil {
+                    continue
+                }
+                let currentModel = property.typeClass as! NSObject.Type
+                let currentArr = currentModel.objectArrayForModelArr(value as! Array )
+                self.setValue(currentArr, forKey: property.propertyName)
+            }
+            else {
+                guard let value = currentDict[property.property] else {
+                    debugPrint("Debug: " + "\(property.propertyName)" + "模型与字典的key不匹配")
+                    return
+                }
+                let type = NSStringFromClass(object_getClass(value)!)
+                if type != "NSNull" {
+                    self.setValue(value, forKey: property.propertyName as String)
+                }else {
+                    debugPrint("Debug: " + "\(property.propertyName)" + "值为nil")
+                }
+
+            }
+            
+        }
+    }
+    
+}
+    
+class GPLProperty{
     var propertyName:String!
     var property:String!
-    var tmModelType:TinyModelType = .Base
+    var modelType:ModelType = .Normal
     var typeClass:AnyClass?
 
     init(_ tmProperty:objc_property_t ,_ dict:Dictionary<String, String> , _ rdict:Dictionary<String, String>){
@@ -200,11 +214,11 @@ class LKKProperty{
         
         if (newValues != nil) {
             let value = dict[values]!
-            if value.contains("AloneModel") {
-                self.tmModelType = .Model
+            if value.contains("OnlyModel") {
+                self.modelType = .Model
             }
             if value.contains("ModelArr") {
-                self.tmModelType = .ModelArr
+                self.modelType = .ModelArr
             }
             let className = tmFristCapitalized(str: self.propertyName)
             self.typeClass =   NSClassFromString(tmGetBundleName() + "." + className)

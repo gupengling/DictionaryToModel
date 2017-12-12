@@ -18,7 +18,7 @@ class TeacherModel: BaseModel {
     }
     
     override func tmStatementKey() -> [String : String] {
-        return ["classModel":"AloneModel","schoolModel":"ModelArr"]
+        return ["classModel":"OnlyModel","schoolModel":"ModelArr"]
     }
 //    override func tmStatementKey() -> [String : String] {
 //        return ["schoolModel":"AloneModel"]
