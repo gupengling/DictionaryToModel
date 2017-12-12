@@ -6,7 +6,7 @@
 
 * 思维逻辑用运行时对对象进行属性映射
 
-* 将两个扩展类导入工程中 *** NSObject+GPLDicToModel.h *** 和 *** NSObject+GPLDicToModel.m ***
+* 将两个扩展类导入工程中 **NSObject+GPLDicToModel.h** 和 **NSObject+GPLDicToModel.m**
 
 > * 使用方法
 
@@ -27,10 +27,10 @@ NSDictionary *dicTest = @{@"id":@"121",
 TestModel *model = [TestModel gpl_initWithDictionary:dicTest];
 ```
 
-## 字典转换模型swift4.0 版本
+## swift4.0 版本
 
-*思维逻辑用运行时对对象进行属性映射
-*将NSObject 扩展类导入工程中 *** DicToModel.swift ***
+* 思维逻辑用运行时对对象进行属性映射
+* 将NSObject 扩展类导入工程中 **DicToModel.swift**
 
 >* 使用方法
 
@@ -50,5 +50,5 @@ let teacher:TeacherModel = TeacherModel.objectWithKeyValues(keyValues: dict) as!
 print("age = \(teacher.age) "+"name = \(teacher.name) "+"sex = \(teacher.sex) "+"coding = \(teacher.coding) "+"classId = \(teacher.classModel.classId) "+"className = \(teacher.classModel.className)")
 ```
 
-## 欢迎联系和探讨
-QQ: 574998838
+## 其他
+未完待续
