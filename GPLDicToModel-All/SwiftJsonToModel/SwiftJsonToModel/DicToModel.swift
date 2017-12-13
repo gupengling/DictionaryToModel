@@ -13,6 +13,8 @@ enum ModelType : NSString {
     case Model = "Model"
 }
 
+let OnlyModel:String = "OnlyModel"
+let ModelArr:String = "ModelArr"
 
 //    class func objectWithKeyValues(keyValues:NSDictionary) -> AnyObject{
 //        let model = self.init()
@@ -59,11 +61,11 @@ enum ModelType : NSString {
 
 
 extension NSObject{
-    @objc func tmStatementKey() ->[String:String]{
+    @objc func smStatementKey() ->[String:String]{
         return ["":""]
     }
     
-    @objc func tmReplacedKey() ->[String:String]{
+    @objc func smReplacedKey() ->[String:String]{
         return ["":""]
     }
     
@@ -112,8 +114,8 @@ extension NSObject{
         }
 
         let my = self.init()
-        let statementDict = my.tmStatementKey()
-        let replaceDic = my.tmReplacedKey()
+        let statementDict = my.smStatementKey()
+        let replaceDic = my.smReplacedKey()
 
         var propertiesArray = [GPLProperty]()
         let tmSuperClass =  typeClass.superclass() as! NSObject.Type
@@ -214,22 +216,26 @@ class GPLProperty{
         
         if (newValues != nil) {
             let value = dict[values]!
-            if value.contains("OnlyModel") {
+            if value.contains(OnlyModel) {
                 self.modelType = .Model
             }
-            if value.contains("ModelArr") {
+            if value.contains(ModelArr) {
                 self.modelType = .ModelArr
             }
-            let className = tmFristCapitalized(str: self.propertyName)
-            self.typeClass =   NSClassFromString(tmGetBundleName() + "." + className)
+            let className = smFristCapitalized(str: self.propertyName)
+            self.typeClass =   NSClassFromString(smGetBundleName() + "." + className)
         }
     }
     
     //首字母大写
-    fileprivate func tmFristCapitalized(str:String) -> String {
+    fileprivate func smFristCapitalized(str:String) -> String {
         var noNumber:String = ""
         var i = 0
-        for char in (str as String).characters{
+        
+        let c = str.startIndex
+        for char in str[c ..< str.endIndex] {
+            
+//        for char in (str as String).characters {//用上面形式替换已废弃的方法
             if i == 0 {
                 let str = String(char).uppercased()
                 noNumber = str
@@ -242,7 +248,7 @@ class GPLProperty{
     }
     
     //获取工程的名字
-    fileprivate func tmGetBundleName() -> String{
+    fileprivate func smGetBundleName() -> String{
         var bundlePath = Bundle.main.bundlePath
         bundlePath = bundlePath.components(separatedBy: "/").last!
         bundlePath = bundlePath.components(separatedBy: ".").first!

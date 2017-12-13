@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		295673B71FE10D840032A00C /* InfoTestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295673B61FE10D840032A00C /* InfoTestModel.swift */; };
 		299D1E621FDA205C00C76EE2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299D1E611FDA205C00C76EE2 /* AppDelegate.swift */; };
 		299D1E641FDA205C00C76EE2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299D1E631FDA205C00C76EE2 /* ViewController.swift */; };
 		299D1E671FDA205C00C76EE2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 299D1E651FDA205C00C76EE2 /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		295673B61FE10D840032A00C /* InfoTestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTestModel.swift; sourceTree = "<group>"; };
 		299D1E5E1FDA205C00C76EE2 /* SwiftJsonToModel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftJsonToModel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		299D1E611FDA205C00C76EE2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		299D1E631FDA205C00C76EE2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 				29BCED431FDE4FC700999A99 /* TeacherModel.swift */,
 				29BCED451FDE503600999A99 /* SchoolModel.swift */,
 				29BCED491FDE5F6D00999A99 /* ClassModel.swift */,
+				295673B61FE10D840032A00C /* InfoTestModel.swift */,
 				299D1E651FDA205C00C76EE2 /* Main.storyboard */,
 				299D1E681FDA205C00C76EE2 /* Assets.xcassets */,
 				299D1E6A1FDA205C00C76EE2 /* LaunchScreen.storyboard */,
@@ -154,6 +157,7 @@
 				29BCED4A1FDE5F6D00999A99 /* ClassModel.swift in Sources */,
 				29BCED461FDE503600999A99 /* SchoolModel.swift in Sources */,
 				29BCED441FDE4FC700999A99 /* TeacherModel.swift in Sources */,
+				295673B71FE10D840032A00C /* InfoTestModel.swift in Sources */,
 				29BCED421FDE4F3300999A99 /* BaseModel.swift in Sources */,
 				299D1E641FDA205C00C76EE2 /* ViewController.swift in Sources */,
 				299D1E621FDA205C00C76EE2 /* AppDelegate.swift in Sources */,

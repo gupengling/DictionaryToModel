@@ -13,14 +13,14 @@ class TeacherModel: BaseModel {
     @objc var classModel: ClassModel = ClassModel()
     @objc var schoolModel:Array<SchoolModel> = [SchoolModel]()
 
-    override func tmReplacedKey() -> [String : String] {
+    override func smReplacedKey() -> [String : String] {
         return ["coding":"code","classModel":"class","schoolModel":"school"]
     }
     
-    override func tmStatementKey() -> [String : String] {
-        return ["classModel":"OnlyModel","schoolModel":"ModelArr"]
+    override func smStatementKey() -> [String : String] {
+        return ["classModel":OnlyModel,"schoolModel":ModelArr]
     }
-//    override func tmStatementKey() -> [String : String] {
-//        return ["schoolModel":"AloneModel"]
+//    override func smStatementKey() -> [String : String] {
+//        return ["schoolModel":OnlyModel]
 //    }
 }
