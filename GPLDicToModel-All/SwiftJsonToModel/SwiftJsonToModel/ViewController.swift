@@ -13,7 +13,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        self.func1()
+//        self.func1()
+        self.func2()
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,6 +46,35 @@ class ViewController: UIViewController {
         }
     }
 
+    func func2(){
+        let dict = [["age":24,
+                     "name":"阿花",
+                     "sex":true,
+                     "code":["英语","java","php","swift"],
+                     "class":["classId":110,"className":"12年级","infoTest":["infoId":25,"infoName":"花花"]],
+                     "school":[["schoolId":10000,
+                                "schoolName":"牛逼小学"],
+                               ["schoolId":10001,
+                                "schoolName":"牛逼大学"]],
+                     ],
+                    ["age":25,
+                     "name":"阿龙",
+                     "sex":false,
+                     "code":["英语","java","php","swift"],
+                     "class":["classId":110,"className":"12年级","infoTest":["infoId":26,"infoName":"花花"]],
+                     "school":[["schoolId":10000,
+                                "schoolName":"牛逼小学"],
+                               ["schoolId":10001,
+                                "schoolName":"牛逼大学"]]],
+                    ]
+        
+        let teacherArr:Array = TeacherModel.objectArrayForModelArr(dict)
+        let c = teacherArr.count
+        for i in 0 ..< c {
+            let teacher = teacherArr[i]
+            print("age = \(teacher.age) "+"name = \(teacher.name) "+"sex = \(teacher.sex) "+"coding = \(teacher.coding) "+"classId = \(teacher.classModel.classId) "+"className = \(teacher.classModel.className)"+"infoId = \(teacher.classModel.infoTestModel.infoId) "+"infoName=\(teacher.classModel.infoTestModel.infoName) ")
+        }
+    }
 
 }
 

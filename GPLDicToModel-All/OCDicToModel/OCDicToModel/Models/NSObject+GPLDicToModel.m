@@ -127,7 +127,7 @@ NSString *const GPLClassType_other   =   @"other";
             newPropertyName = propertyName;
         }
 
-        NSLog(@"属性名:%@", propertyName);
+//        NSLog(@"属性名:%@", propertyName);
         
         //获取属性是什么类型的
         NSMutableDictionary *dicPropertyType = [self propertyTypeFromProperty:property];
