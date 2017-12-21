@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "TestModel.h"
+#import "HttpServiceEngine.h"
 
 @interface ViewController ()
 
@@ -20,6 +21,16 @@
     // Do any additional setup after loading the view, typically from a nib.
 //    [self testDic];
     [self testArr];
+    
+    UserInfoRequest *request = [[UserInfoRequest alloc] initWithSuccessCallBack:^(BaseRequest *request) {
+        UserInfoResponceData *data = (UserInfoResponceData *)request.response.data;
+        NSLog(@"name = %@",data.name);
+    } failCallBack:^(BaseRequest *request) {
+        
+    }];
+    request.requestParm = @{@"name":@"yanzhenjie",
+                            @"pwd":@"123"};
+    [[HttpServiceEngine sharedInstance] asyncGetRequest:request];
 }
 
 - (void)testDic {

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		298CF65B1FEB7C8800E19F7D /* BaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 298CF65A1FEB7C8800E19F7D /* BaseRequest.m */; };
+		298CF65E1FEB7D4A00E19F7D /* BaseResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 298CF65D1FEB7D4A00E19F7D /* BaseResponse.m */; };
+		298CF6641FEB855000E19F7D /* HttpServiceEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 298CF6631FEB855000E19F7D /* HttpServiceEngine.m */; };
 		29BCED591FDFA3F700999A99 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 29BCED581FDFA3F700999A99 /* AppDelegate.m */; };
 		29BCED5C1FDFA3F700999A99 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29BCED5B1FDFA3F700999A99 /* ViewController.m */; };
 		29BCED5F1FDFA3F700999A99 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29BCED5D1FDFA3F700999A99 /* Main.storyboard */; };
@@ -18,6 +21,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		298CF6591FEB7C8800E19F7D /* BaseRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseRequest.h; sourceTree = "<group>"; };
+		298CF65A1FEB7C8800E19F7D /* BaseRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseRequest.m; sourceTree = "<group>"; };
+		298CF65C1FEB7D4900E19F7D /* BaseResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseResponse.h; sourceTree = "<group>"; };
+		298CF65D1FEB7D4A00E19F7D /* BaseResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseResponse.m; sourceTree = "<group>"; };
+		298CF6621FEB855000E19F7D /* HttpServiceEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HttpServiceEngine.h; sourceTree = "<group>"; };
+		298CF6631FEB855000E19F7D /* HttpServiceEngine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HttpServiceEngine.m; sourceTree = "<group>"; };
 		29BCED541FDFA3F700999A99 /* OCDicToModel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OCDicToModel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29BCED571FDFA3F700999A99 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		29BCED581FDFA3F700999A99 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -45,6 +54,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		298CF6581FEB7C2D00E19F7D /* HttpRequest */ = {
+			isa = PBXGroup;
+			children = (
+				298CF6591FEB7C8800E19F7D /* BaseRequest.h */,
+				298CF65A1FEB7C8800E19F7D /* BaseRequest.m */,
+				298CF65C1FEB7D4900E19F7D /* BaseResponse.h */,
+				298CF65D1FEB7D4A00E19F7D /* BaseResponse.m */,
+				298CF6621FEB855000E19F7D /* HttpServiceEngine.h */,
+				298CF6631FEB855000E19F7D /* HttpServiceEngine.m */,
+			);
+			path = HttpRequest;
+			sourceTree = "<group>";
+		};
 		29BCED4B1FDFA3F700999A99 = {
 			isa = PBXGroup;
 			children = (
@@ -64,6 +86,7 @@
 		29BCED561FDFA3F700999A99 /* OCDicToModel */ = {
 			isa = PBXGroup;
 			children = (
+				298CF6581FEB7C2D00E19F7D /* HttpRequest */,
 				29BCED6D1FDFA41A00999A99 /* Models */,
 				29BCED571FDFA3F700999A99 /* AppDelegate.h */,
 				29BCED581FDFA3F700999A99 /* AppDelegate.m */,
@@ -164,6 +187,9 @@
 				29BCED741FDFB07400999A99 /* TestModel.m in Sources */,
 				29BCED711FDFA47500999A99 /* NSObject+GPLDicToModel.m in Sources */,
 				29BCED671FDFA3F700999A99 /* main.m in Sources */,
+				298CF65E1FEB7D4A00E19F7D /* BaseResponse.m in Sources */,
+				298CF6641FEB855000E19F7D /* HttpServiceEngine.m in Sources */,
+				298CF65B1FEB7C8800E19F7D /* BaseRequest.m in Sources */,
 				29BCED591FDFA3F700999A99 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
