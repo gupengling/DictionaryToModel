@@ -24,9 +24,9 @@
     
     UserInfoRequest *request = [[UserInfoRequest alloc] initWithSuccessCallBack:^(BaseRequest *request) {
         UserInfoResponceData *data = (UserInfoResponceData *)request.response.data;
-        NSLog(@"name = %@",data.name);
+        NSLog(@"code = %zd name = %@",request.response.error,data.blog);
     } failCallBack:^(BaseRequest *request) {
-        
+        NSLog(@"code = %zd message = %@",request.response.error,request.response.errorMessage);
     }];
     request.requestParm = @{@"name":@"yanzhenjie",
                             @"pwd":@"123"};

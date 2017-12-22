@@ -33,9 +33,9 @@
 @interface BaseResponse : NSObject
 // 对应json中返回的字段
 @property (nonatomic, assign) NSInteger error;
-@property (nonatomic, copy) NSString *errorInfo;
+@property (nonatomic, copy) NSString *message;
 @property (nonatomic, strong) BaseResponseData *data;
 
 - (BOOL)success;
-- (NSString *)message;
+- (NSString *)errorMessage;
 @end

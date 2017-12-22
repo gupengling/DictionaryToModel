@@ -42,7 +42,7 @@
     if (self = [super init]) {
         // 默认成功
         _error = 1;
-        _errorInfo = @"请求出错";
+        _message = @"";
     }
     return self;
 }
@@ -51,9 +51,9 @@
 {
     return _error == 1;
 }
-- (NSString *)message
+- (NSString *)errorMessage
 {
-    return _errorInfo;
+    return _message;
 }
 
 @end

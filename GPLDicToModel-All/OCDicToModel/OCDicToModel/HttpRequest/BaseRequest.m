@@ -128,7 +128,7 @@
             // 说明返回内容有问题
             if (_failBlock) {
                 _response.error = -1;
-                _response.errorInfo = @"返回数据非Json格式";
+                _response.message = @"返回数据非Json格式";
                 _failBlock(self);
             }
             NSLog(@"[%@]解析响应完成<<<<<<", self);
@@ -149,7 +149,7 @@
 {
     _response = [[[self responseClass] alloc] init];
     _response.error = [bodyDic[@"error"] integerValue];
-    _response.errorInfo = bodyDic[@"errorInfo"];
+    _response.message = bodyDic[@"message"];
     NSDictionary *data = bodyDic[@"data"];
     
     NSLog(@"[%@]开始转换模型对象<<<<<<<<<<<<<\n====================\ndata=%@\n====================",self,data.description);
@@ -168,7 +168,7 @@
 @implementation UserInfoRequest
 - (NSString *)url {
     NSString *host = [self hostUrl];
-    return [NSString stringWithFormat:@"%@/method",host];//?name=yanzhenjie&pwd=123
+    return [NSString stringWithFormat:@"%@/method",host];
 }
 - (NSDictionary *)packageParams {
     return _requestParm;
@@ -177,7 +177,7 @@
 //    return paramDic;
 }
 //- (Class)responseDataClass {
-//    return [LoginResponceData class];
+//    return [UserInfoResponceData class];
 //}
 - (BaseResponseData *)parseResponseData:(NSDictionary *)dataDic {
     return [UserInfoResponceData gpl_initWithDictionary:dataDic];
