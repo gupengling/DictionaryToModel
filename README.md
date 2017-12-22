@@ -51,5 +51,100 @@ let teacher:TeacherModel = TeacherModel.objectWithKeyValues(keyValues: dict) as!
 print("age = \(teacher.age) "+"name = \(teacher.name) "+"sex = \(teacher.sex) "+"coding = \(teacher.coding) "+"classId = \(teacher.classModel.classId) "+"className = \(teacher.classModel.className)"+"infoId = \(teacher.classModel.infoTestModel.infoId) "+"infoName=\(teacher.classModel.infoTestModel.infoName) ")
 ```
 
-## 其他
+# HttpRequest
+
+## OC版本
+
+* 主要文件 **BaseRequest** ，**BaseResponse** 和 **HttpServiceEngine**
+
+>* 使用方法
+
+```
+//创建一个Request对象，继承BaseRequest，实现里面必需重写的方法
+
+@interface UserInfoRequest:BaseRequest
+@property (nonatomic, strong) NSDictionary *requestParm;
+@end
+
+@implementation UserInfoRequest
+- (NSString *)url {
+NSString *host = [self hostUrl];
+return [NSString stringWithFormat:@"%@/method",host];
+}
+- (NSDictionary *)packageParams {
+return _requestParm;
+//    NSDictionary *paramDic = @{@"name"  : @"yanzhenjie",
+//                               @"pwd" : @"123" };
+//    return paramDic;
+}
+//- (Class)responseDataClass {
+//    return [UserInfoResponceData class];
+//}
+- (BaseResponseData *)parseResponseData:(NSDictionary *)dataDic {
+return [UserInfoResponceData gpl_initWithDictionary:dataDic];
+}
+```
+
+```
+//根据requestParm 请求
+UserInfoRequest *request = [[UserInfoRequest alloc] initWithSuccessCallBack:^(BaseRequest *request) {
+UserInfoResponceData *data = (UserInfoResponceData *)request.response.data;
+NSLog(@"code = %zd name = %@",request.response.error,data.blog);
+} failCallBack:^(BaseRequest *request) {
+NSLog(@"code = %zd message = %@",request.response.error,request.response.errorMessage);
+}];
+request.requestParm = @{@"name":@"yanzhenjie",
+@"pwd":@"123"};
+[[HttpServiceEngine sharedInstance] asyncGetRequest:request];
+```
+
+
+## Swift 4.0 版本
+
+* 主要文件 **BaseRequest** ，**BaseResponseData** 和 **HttpServiceEngine**
+
+>* 使用方法
+
+```
+//写一个Request对象继承BaseRequest，实现里面必需重写的方法
+class UserInfoRequest: BaseRequest {
+var requestParm:Dictionary<String, AnyObject>?
+
+override func url() -> String {
+let host = hostUrl()
+let url = host.appending("/method")
+return url
+}
+override func packageParams() -> Dictionary<String, AnyObject> {
+return requestParm!
+}
+
+override func parseResopnseData(dic: Dictionary<String, AnyObject>) -> AnyObject {
+return UserInfoResponceData.objectWithKeyValues(keyValues:dic) as! UserInfoResponceData
+}
+}
+```
+
+```
+//根据requestParm 请求
+let req: UserInfoRequest = UserInfoRequest()
+req.initWithBlock(success: { (req) in
+let resData:UserInfoResponceData = req.resopnse.data as! UserInfoResponceData
+print("code = \(req.resopnse.error),token =\(resData.blog)")
+let count:Int = resData.projectListCell.count
+for i in 0..<count {
+let cell:ProjectListCell = resData.projectListCell[i]
+print("\ncomment = \(cell.comment) \nid = \(cell.projectId) \nname = \(cell.name) \nurl = \(cell.url)\n")
+}
+}) { (req) in
+print("错误\(req.resopnse.error)")
+}
+req.requestParm = ["name":"yanzhenjie" as AnyObject,"pwd":"123" as AnyObject]
+HttpServiceEngine.shareInstance.asyncGetRequest(req: req)
+```
+
+# 其他
+欢迎沟通 QQ：574998838
+
 未完待续
+
