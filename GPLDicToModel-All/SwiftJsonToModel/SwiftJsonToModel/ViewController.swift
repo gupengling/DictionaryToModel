@@ -13,6 +13,20 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        let req: UserInfoRequest = UserInfoRequest()
+        req.initWithBlock(success: { (req) in
+            let resData:UserInfoResponceData = req.resopnse.data as! UserInfoResponceData
+            print("code = \(req.resopnse.error),token =\(resData.blog)")
+            let count:Int = resData.projectListCell.count
+            for i in 0..<count {
+                let cell:ProjectListCell = resData.projectListCell[i]
+                print("\ncomment = \(cell.comment) \nid = \(cell.projectId) \nname = \(cell.name) \nurl = \(cell.url)\n")
+            }
+        }) { (req) in
+            print("错误\(req.resopnse.error)")
+        }
+        req.requestParm = ["name":"yanzhenjie" as AnyObject,"pwd":"123" as AnyObject]
+        HttpServiceEngine.shareInstance.asyncGetRequest(req: req)
 //        self.func1()
         self.func2()
     }
